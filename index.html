@@ -2,7 +2,7 @@
 <html><script>window._wordtune_extension_installed = true;</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>H-InDex</title>
 	<meta property="og:title" content="H-InDex">
-	<meta property="og:description" content="H-InDex: Hand-Informed Visual Representations for Dexterous Manipulation with Reinforcement Learning">
+	<meta property="og:description" content=" H-InDex: Visual Reinforcement Learning with Hand-Informed Representations for Dexterous Manipulation">
 	<link rel="stylesheet" href="./files/style.css">
 	<link rel="stylesheet" href="./files/css">
   <link rel="icon" href="figures/robotic-hand.png">
@@ -1548,10 +1548,11 @@
 </div>
 
 <div class="content">
-	<div class="figure" style="height: 584px; background-image: url(figures/bar_chart.png); margin-top: -30px;"></div>
+	<div class="figure" style="height: 430px; background-image: url(figures/bar_chart.png); margin-top: -30px;"></div>
 	<div style="margin: auto; margin-top: -20px" align="center">
 		<p>
-			<span class="bold">Episode return for <b>12</b> challenging dexterous manipulation tasks.</span> Our method achieves both sample efficiency and better convergence compared to the prior state-of-the-art visual representation (RRL).
+			<span class="bold">Normalized average score across <b>12</b> challenging dexterous manipulation tasks.</span> Our method (<span style="color: #c03d3e;font-weight: bolder;">H-InDex</span>) achieves <span style="font-weight: bolder;">16.8%</span> improvement over VC-1 
+      (the very recent visual foundation model for control) and <span style="font-weight: bolder;">25.4%</span> improvement over RRL (the previous state-of-the-art visual representation on Adroit).
 		</p>
 	</div>
 
@@ -1559,15 +1560,16 @@
 	<div>
 		<h2>Abstract</h2>
 		<p class="abstract">
-			While significant progress has been made on understanding human pose in computer vision, 
-      it is still challenging for robots to learn from the complex human hand interactions directly. 
-      In this work, we propose a human <span style="font-weight: bolder; color: #c03d3e;">H</span>and-<span style="font-weight: bolder; color: #c03d3e;">In</span>formed visual reinforcement learning framework to 
-      solve difficult <span style="font-weight: bolder; color: #c03d3e;">Dex</span>terous manipulation tasks (<span style="font-weight: bolder; color: #c03d3e;">H-InDex</span>). 
-      Our designed framework consists of three stages: <span class="italic">(i)</span> pretraining representations with 3D human hand pose estimation, 
-      <span class="italic">(ii)</span>  offline adapting representations with self-supervised keypoint detection, 
-      and <span class="italic">(iii)</span>  reinforcement learning with EMA BatchNorm. 
-      The principle of all stages is to maintain the knowledge learned from human interactions as possible.
-      We empirically study \textbf{12} challenging dexterous manipulation tasks and find that our method largely surpasses the previous state-of-the-art method and also the recent visual foundation model for motor control.
+			
+      <span style="font-weight: bolder;">Human hands possess remarkable dexterity and have long served as a source of inspiration for robotic manipulation.</span>
+      In this work, we propose a human <span style="font-weight: bolder; color: #c03d3e;">H</span>and-<span style="font-weight: bolder; color: #c03d3e;">In</span>formed visual representation learning framework to solve difficult 
+      <span style="font-weight: bolder; color: #c03d3e;">Dex</span>terous manipulation tasks (<span style="font-weight: bolder; color: #c03d3e;">H-InDex</span>). 
+      Our framework consists of three stages: <span class="italic">(i)</span> pre-training representations with 3D human hand pose estimation, 
+      <span class="italic">(ii)</span> offline adapting representations with self-supervised keypoint detection, and 
+      <span class="italic">(iii)</span> reinforcement learning with exponential moving average BatchNorm. 
+      The last two stages only modify <span style="font-weight: bolder;">0.36%</span> parameters of the pre-trained representation in total, 
+      ensuring the knowledge from pre-training is maintained to the full extent. 
+      We empirically study <span style="font-weight: bolder;">12</span> challenging dexterous manipulation tasks and find that our method largely surpasses the previous state-of-the-art method and also the recent visual foundation models for motor control.
 		</p>
 	</div>
 
@@ -1576,24 +1578,20 @@
 		<h2>Method Overview</h2>
     <div class="figure" style="height: 556px; background-image: url(figures/overview_v2.png);"></div>
     <br>
-    <div class="figure-caption" style="margin-top: -16px;">
+    <!-- <div class="figure-caption" style="margin-top: -16px;">
 		<p>
-			Our method consists of three phases: <span class="bold">representation pretraining</span>, <span class="bold">offline representatin adaptation</span>, and <span class="bold">online representation adaptation</span>. 
+			Our method consists of three stages: <span class="bold">representation pre-training</span>, <span class="bold">representatin offline adaptation</span>, and <span class="bold">reinforcement learning</span>.
 		</p>
-  </div>
+  </div> -->
 	</div>
 
   <div class="hr"></div>
 
   <div>
 		<h2>Visualization of Tasks</h2>
+    <h4>We show the successful trajectories of our dexterous manipulation task suite, generated by policies trained with <span style="color: #c03d3e;font-weight: bolder;">H-InDex</span>.</h4>
     <br>
-		<div class="figure-caption" style="margin-top: -16px;">
-      <p>
-        We show the successful trajectories of our dexterous manipulation task suite, generated by policies trained from H-InDex.
-		</p>
-  </div>
-  <div class="content-video" style="margin-bottom: 48px">
+    <div class="content-video" style="margin-bottom: 48px">
     <div class="content-video-container">
 
       <div class="content-video" style="margin-bottom: 40px">
@@ -1698,80 +1696,128 @@
 
      
     </div>
+  
   </div>
 	</div>
 
 
 	<div class="hr"></div>
 	<div>
-		<h2>Visualization of Unsupervised Hand Keypoint Detection</h2>
+		<h2>Visualization of Self-Supervised Keypoint Detection</h2>
+    <h4>We visualize the self-supervised keypoint detection results in Stage 2. The trajectory here is from the training videos.</h4>
     <br>
-		<div class="figure-caption" style="margin-top: -16px;">
-			<p>
-				Below, we visualize trajectories generated by our method for a subset of the 18 sparse reward tasks that we consider.
-			</p>
-		</div>
-
-
-		<div class="content-video" style="margin-bottom: 48px">
-			<div class="content-video-container">
-				<video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_hammer-v0.mp4" type="video/mp4">
-				</video>
-				<video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_door-v0.mp4" type="video/mp4">
-				</video>
-				<video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_pen-v0.mp4" type="video/mp4">
-				</video>
-				<video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_pour.mp4" type="video/mp4">
-				</video>
-				<video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_place_inside.mp4" type="video/mp4">
-				</video>
-				<video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_relocate-mug.mp4" type="video/mp4">
-				</video>
-				<!-- <video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_relocate-foam_brick.mp4" type="video/mp4">
-				</video> -->
-				<!-- <video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_relocate-large_clamp.mp4" type="video/mp4">
-				</video> -->
-        <video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_relocate-mustard_bottle.mp4" type="video/mp4">
-				</video>
-        <!-- <video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_relocate-potted_meat_can.mp4" type="video/mp4">
-				</video> -->
-        <!-- <video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_relocate-sugar_box.mp4" type="video/mp4">
-				</video> -->
-        <video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-					<source src="videos/keypoint_relocate-tomato_soup_can.mp4" type="video/mp4">
-				</video>
-			</div>
-		</div>
+    <div class="content-video" style="margin-bottom: 48px">
+      <div class="content-video-container">
+  
+        <div class="content-video" style="margin-bottom: 40px">
+          <div class="content-video-container">
+  
+            <div class="content-video-frame">
+              <span>Hammer</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_hammer-v0.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Door</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_door-v0.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Pen</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_pen-v0.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Pour</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_pour.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="content-video" style="margin-bottom: 40px">
+          <div class="content-video-container">
+            <div class="content-video-frame">
+              <span>Place Inside</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_place_inside.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+  
+            <div class="content-video-frame">
+              <span>Relocate Large Clamp</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_relocate-large_clamp.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Relocate Foam Brick</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_relocate-foam_brick.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Relocate Box</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_relocate-sugar_box.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          </div>
+  
+        <div class="content-video" style="margin-bottom: 40px">
+          <div class="content-video-container">
+            <div class="content-video-frame">
+              <span>Relocate Mug</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_relocate-mug.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Relocate Mustard Bottle</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_relocate-mustard_bottle.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Relocate Tomato Soup Can</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_relocate-tomato_soup_can.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+            <div class="content-video-frame">
+              <span>Relocate Potted Meat Can</span>
+              <video playsinline="" autoplay="" loop="" preload="" muted="" width="100%">
+                <source src="videos/keypoint_relocate-potted_meat_can.mp4" type="video/mp4">
+              </video>
+            </div>
+  
+          </div>
+        </div>
+  
+       
+      </div>
+    </div>
 	</div>
   
   <div class="hr"></div>
 
 
 
-  <div>
-    <h2>Interpretation</h2>
-    <div class="figure-caption">
-			<p>
-				We show that our method could still detect human hand keypoints, mainly benefited from the frozen convolutional layers.
-			</p>
-		</div>
-    <div class="content-video-container">
-      <video playsinline="" autoplay="" loop="" preload="" muted="" width="24.5%">
-        <source src="videos/keypoint_human.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
 
 </div>
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
